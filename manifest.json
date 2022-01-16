@@ -1,0 +1,20 @@
+[
+  {
+    "coin": "Bitcoin",
+    "ticker": "BTCUSDT",
+    "symbol": "BTC",
+    "price": "unknown"
+  },
+  {
+    "coin": "Ethereum",
+    "ticker": "ETHUSDT",
+    "symbol": "ETH",
+    "price": "unknown"
+  },
+  {
+    "coin": "Monero",
+    "ticker": "XMRUSDT",
+    "symbol": "XMR",
+    "price": "unknown"
+  }
+]
