@@ -69,6 +69,8 @@ async def my_id(message):
 
 @client.event
 async def on_ready():
+    channel = await client.fetch_channel(channel_id)
+    await channel.send(f'{client.user} has Awoken!')
     print(f'{client.user} has Awoken!')
 
 @client.event
