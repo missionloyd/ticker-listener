@@ -4,6 +4,7 @@ import logger
 import time
 import datetime
 import progressBar
+from product_listener import product_listener
 
 sleepTime = 10
 recoverTime = 30
@@ -66,7 +67,16 @@ while(True):
     else:
       logger.display('info', log, (ticker['symbol'] + ": $" + price_clean))
 
-  #logger.display('info', log, 'ENTRY END')
 
   previousTickers = tickers
+
+  product_status = product_listener()
+
+  if(product_status == 0):
+    logger.display('decrease', log, ("*** Product Sold Out *** " + timeAgo()))
+  elif(product_status == 1):
+    logger.display('info', log, ("*** Product Available *** " + timeAgo()))
+  else:
+    logger.display('info', log, ("*** Product Listener Error *** " + timeAgo()))
+
   sleep(sleepTime)
