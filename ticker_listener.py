@@ -4,7 +4,7 @@ import logger
 import time
 import datetime
 import progressBar
-from product_listener import product_listener
+from whattomine_listener import coin_rankings
 
 sleepTime = 10
 recoverTime = 30
@@ -70,13 +70,11 @@ while(True):
 
   previousTickers = tickers
 
-  product_status = product_listener()
+  rankings = coin_rankings()
 
-  if(product_status == 0):
-    logger.display('decrease', log, ("*** Product Sold Out *** " + timeAgo()))
-  elif(product_status == 1):
-    logger.display('info', log, ("*** Product Available *** " + timeAgo()))
+  if(rankings != 'Failed'):
+    logger.display('info', log, (rankings))
   else:
-    logger.display('info', log, ("*** Product Listener Error *** " + timeAgo()))
+    logger.display('info', log, ("*** API Error *** "))
 
   sleep(sleepTime)
