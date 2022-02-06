@@ -5,13 +5,14 @@ from dotenv import load_dotenv
 from whattomine_listener import coin_rankings
 from genesis_listener import genesis_status, check_ping
 from affirmations_listener import affirmation
+from convo_listener import reply
 
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
 channel_id = os.getenv('CHANNEL_ID')
 client = commands.Bot(command_prefix='!')
 
-@tasks.loop(hours=1)
+@tasks.loop(hours=6)
 async def wmine():
     channel = await client.fetch_channel(channel_id)
     await channel.send(coin_rankings(3))
@@ -27,7 +28,7 @@ async def genesis():
     else:
         await channel.send(wrapped_message)
 
-@tasks.loop(hours=0.45)
+@tasks.loop(hours=8)
 async def affirmations():
     channel = await client.fetch_channel(channel_id)
     await channel.send(affirmation())
@@ -54,9 +55,9 @@ async def aff(ctx):
     await channel.send(affirmation())
 
 @client.command()
-async def man(ctx):
+async def c2(ctx):
     channel = await client.fetch_channel(channel_id)
-    await channel.send('Mining Rankings:\t!what\nGenesis Stats:\t\t!gene\nAffirmation:\t\t\t!aff')
+    await channel.send(reply())
 
 @client.command()
 async def hello(ctx):
@@ -65,7 +66,6 @@ async def hello(ctx):
 @client.event
 async def my_id(message):
     print(message.author.id)
-
 
 @client.event
 async def on_ready():
