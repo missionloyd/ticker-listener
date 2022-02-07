@@ -13,6 +13,25 @@ def check_ping(message):
   else:
     return 'ping', message
 
+
+def eth_to_usd(eth):
+  URL='https://api.coinbase.com/v2/prices/ETH-USD/spot'
+  result = ''
+
+  response_API = requests.get(URL)
+
+  if(str(response_API) == "<Response [200]>"):
+    res = json.loads(response_API.text)
+    amount = res['data']['amount']
+    result = float(amount) * float(eth)
+    result = str(round(result, 2))
+
+  else:
+    result = '\nExchange API Failure\n'
+
+  return result
+
+
 def genesis_status():
 
   URL='https://api.ethermine.org/miner/' + TOKEN + '/dashboard'
@@ -54,7 +73,8 @@ def genesis_status():
       result += "Valid Shares: " + str(validShares) + "\n"
       result += "Invalid Shares: " + str(invalidShares) + "\n"
       result += "Stale Shares: " + str(staleShares) + "\n"
-      result += "**Unpaid Balance: " + str(round((unpaid * (10 ** -18)), 5)) + " ETH**\n" 
+      result += "Unpaid Balance: " + str(round((unpaid * (10 ** -18)), 5)) + " ETH\n" 
+      result += "**Unpaid Balance: $" + eth_to_usd(str((unpaid * (10 ** -18)))) + " USD**\n" 
 
       for i in range(0,10):
         result += ":pick: "
